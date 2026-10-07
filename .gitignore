@@ -1,0 +1,38 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Compilation, test and coverage artifacts
+artifacts/
+cache/
+coverage/
+coverage.json
+typechain-types/
+typechain/
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Runtime and local generated files
+frontend/public/config.json
+contracts/deployments/localhost.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

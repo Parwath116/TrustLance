@@ -1,0 +1,32 @@
+{
+  "name": "trustlance-monorepo",
+  "version": "1.0.0",
+  "description": "TrustLance - Decentralized Freelance Marketplace with Escrow and On-Chain Dispute Resolution",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "node:local": "npm --workspace=contracts run node",
+    "test:contracts": "npm --workspace=contracts run test",
+    "coverage:contracts": "npm --workspace=contracts run coverage",
+    "test:backend": "npm --workspace=backend run test",
+    "build:frontend": "npm --workspace=frontend run build",
+    "deploy:local": "npm --workspace=contracts run deploy:local",
+    "deploy:sepolia": "npm --workspace=contracts run deploy:sepolia",
+    "seed:arbitrators": "npm --workspace=contracts run seed:arbitrators",
+    "verify:sepolia": "npm --workspace=contracts run verify:sepolia",
+    "e2e:local": "node scripts/e2e-test.js",
+    "dev:backend": "npm --workspace=backend run dev",
+    "dev:frontend": "npm --workspace=frontend run dev",
+    "dev": "concurrently \"npm --workspace=backend run dev\" \"npm --workspace=frontend run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
