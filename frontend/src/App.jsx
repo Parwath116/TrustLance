@@ -78,7 +78,7 @@ function Footer() {
           <strong>TrustLance</strong> &mdash; Decentralized Freelance Marketplace with Milestone Escrow & On-Chain Arbitration
         </p>
         <p style={{ marginTop: "0.25rem", fontSize: "0.8rem" }}>
-          VTU 7th-Sem Major Project BCS786 &bull; Solidity 0.8.24 &bull; OpenZeppelin v5 &bull; Zero-Fee Architecture
+          Solidity 0.8.24 &bull; OpenZeppelin v5 &bull; Zero-Fee Architecture
         </p>
       </div>
     </footer>

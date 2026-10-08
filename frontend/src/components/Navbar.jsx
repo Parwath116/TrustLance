@@ -69,7 +69,6 @@ export function Navbar() {
           <Link to="/" className="brand">
             <span style={{ fontSize: "1.4rem" }}>🛡️</span>
             <span>TrustLance</span>
-            <span className="brand-badge">BCS786</span>
           </Link>
 
           <ul className="nav-links">

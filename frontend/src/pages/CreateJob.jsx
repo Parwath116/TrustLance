@@ -344,7 +344,7 @@ export function CreateJob() {
                     </label>
                     <input
                       type="number"
-                      step="0.001"
+                      step="any"
                       min="0.0001"
                       className="form-input"
                       value={m.amount}

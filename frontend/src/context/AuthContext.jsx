@@ -26,11 +26,13 @@ export function AuthProvider({ children }) {
       setIsSigningIn(true);
       setAuthError(null);
 
-      // Step 1: Request cryptographic nonce
-      const { nonce } = await api.getNonce(account);
+      // Step 1: Request cryptographic challenge from backend
+      const nonceRes = await api.getNonce(account);
+      const message =
+        nonceRes.message ||
+        `Sign this message to authenticate with TrustLance:\nNonce: ${nonceRes.nonce}`;
 
-      // Step 2: Request EIP-191 personal sign
-      const message = `TrustLance Authentication: ${nonce}`;
+      // Step 2: Request EIP-191 personal sign from wallet
       const signature = await signer.signMessage(message);
 
       // Step 3: Verify signature with backend
@@ -38,13 +40,21 @@ export function AuthProvider({ children }) {
 
       if (res && res.token) {
         localStorage.setItem("trustlance_token", res.token);
+        localStorage.setItem("trustlance_account", account.toLowerCase());
         setToken(res.token);
       } else {
         throw new Error("No token returned by authentication server");
       }
     } catch (err) {
       console.error("[AuthContext] Sign-in error:", err);
-      setAuthError(err.message || "Failed to sign in with Ethereum");
+      const isUserRejected =
+        err.code === 4001 ||
+        err.code === "ACTION_REJECTED" ||
+        err.message?.includes("User rejected");
+      const errorMsg = isUserRejected
+        ? "Signature request was rejected in MetaMask."
+        : err.message || "Failed to sign in with Ethereum";
+      setAuthError(errorMsg);
     } finally {
       setIsSigningIn(false);
     }
@@ -66,6 +76,11 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (!account) {
       signOut();
+    } else {
+      const storedAccount = localStorage.getItem("trustlance_account");
+      if (storedAccount && storedAccount.toLowerCase() !== account.toLowerCase()) {
+        signOut();
+      }
     }
   }, [account, signOut]);
 

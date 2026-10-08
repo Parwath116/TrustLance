@@ -56,10 +56,17 @@ async function verifySignature(req, res, next) {
     }
 
     const expectedMessage = buildSignMessage(user.nonce);
+    const fallbackMessage = `TrustLance Authentication: ${user.nonce}`;
 
     let recoveredAddress;
     try {
       recoveredAddress = ethers.verifyMessage(expectedMessage, signature).toLowerCase();
+      if (recoveredAddress !== address) {
+        const fallbackRecovered = ethers.verifyMessage(fallbackMessage, signature).toLowerCase();
+        if (fallbackRecovered === address) {
+          recoveredAddress = fallbackRecovered;
+        }
+      }
     } catch (err) {
       return res.status(401).json({ error: "Cryptographic signature verification failed", details: err.message });
     }
